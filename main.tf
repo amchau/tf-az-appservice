@@ -1,7 +1,6 @@
 
-
+/*
 module "tag" {
-  source         = "git::ssh://sede-ds-adp@vs-ssh.visualstudio.com/v3/sede-ds-adp/Platform%20-%20General/sedp-tf-az-tagging?ref=v0.1.0"
   projectStream  = var.projectStream
   environment    = var.environment
   owner          = var.owner
@@ -9,7 +8,7 @@ module "tag" {
   placement      = var.placement
   releaseVersion = var.releaseVersion
 }
-
+*/
 
 data "azurerm_resource_group" "rg" {
   name = var.app_service_rg
@@ -17,7 +16,8 @@ data "azurerm_resource_group" "rg" {
 
 locals {
   location = var.app_service_location == "" ? data.azurerm_resource_group.rg.location : var.app_service_location
-  tags     = merge(var.app_service_additional_tags, data.azurerm_resource_group.rg.tags,module.tag.tags_primary)
+  tags     = merge(var.app_service_additional_tags, data.azurerm_resource_group.rg.tags)
+  //tags     = merge(var.app_service_additional_tags, data.azurerm_resource_group.rg.tags,module.tag.tags_primary)
 }
 
 data "azurerm_app_service_plan" "asp1" {
